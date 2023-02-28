@@ -1,0 +1,243 @@
+openapi: '3.0.3'
+info:
+  version: 0.0.3
+  title: VIVO REST API
+  description: 'A REST API that provides read access to VIVO objects'
+  contact:
+    name: Matthias Lühr
+    url:  https://www.staff.hs-mittweida.de/luehr/koken
+    email: luehr@hs-mittweida.de
+  license:
+    name: MIT
+    url: http://opensource.org/licenses/MIT
+servers:
+    - url: https://vivo-rest-api.hs-mittweida.de/v1/
+      description: The one and only
+paths:
+  /persons:
+    get:
+      summary: get list of all persons in VIVO
+      responses:
+        200:
+          description: OK.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    label:
+                      type: string
+  /persons/{id}:
+    get:
+      summary: Information about a person.
+      responses:
+        200:
+          description: OK.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  uri:
+                    type: string
+                  label:
+                    type: string
+                  info:
+                    type: object
+                    properties:
+                      overview:
+                        type: string
+                      research_overview:
+                        type: string
+                  contact_information:
+                    type: object
+                    properties:
+                      first_name:
+                        type: string
+                      last_name:
+                        type: string
+                      emails:
+                        type: array
+                        items:
+                            type: string
+                      home_pages:
+                        type: array
+                        items:
+                            type: object
+                            properties:
+                              home_page_name:
+                                type: string
+                              home_page_url:
+                                type: string
+                      phones:
+                        type: array
+                        items:
+                          type: string
+
+        404:
+          description: User not found.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: Persons's account name.
+  /persons/{id}/publications:
+    get:
+      summary: get publications of a given person
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: List of a person's publication.
+      responses:
+        200:
+          description: OK.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    label:
+                      type: string                      
+  /persons/{id}/projects:
+    get:
+      summary: get projects of a given person
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: List of a person's projects.
+      responses:
+        200:
+          description: OK.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    label:
+                      type: string   
+  /publications:
+    get:
+      summary: get list of all publications in VIVO
+      responses:
+        200:
+          description: OK.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    label:
+                      type: string
+  /publications/{id}:
+    get:
+      summary: get information about publication
+      responses:
+        200:
+          description: OK.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  label:
+                    type: string
+                  doi:
+                    type: string
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: Publication's ID.
+  /publications/{id}/authors:
+    get:
+      summary: get authors of a given publication
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: List of authors of a publication.
+      responses:
+        200:
+          description: OK.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    label:
+                      type: string
+  /projects:
+    get:
+      summary: get list of all grants in VIVO
+      responses:
+        200:
+          description: OK.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    label:
+                      type: string
+  /projects/{id}/investigators:
+    get:
+      summary: get researches of a given project
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: List of researchers who are involved in a given project.
+      responses:
+        200:
+          description: OK.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    label:
+                      type: string

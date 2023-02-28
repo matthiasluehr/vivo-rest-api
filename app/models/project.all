@@ -1,0 +1,26 @@
+class Project
+
+    def Project.all
+        vivo = VIVO.new
+
+        query = "SELECT ?uri ?title WHERE { ?uri a kdsf:Drittmittelprojekt . ?uri rdfs:label ?title . }"
+        vivo.query(query)
+    end
+
+    def initialize(uri)
+        @uri = uri
+    end
+
+    def get_prinicipal_investigators
+
+    end
+
+    def get_researchers
+
+    end
+
+    def get_funders
+
+    end
+
+end
